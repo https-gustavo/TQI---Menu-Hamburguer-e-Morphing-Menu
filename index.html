@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bootcamp TQI - Fullstack</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header-wrapper">
+    <div class="checkbox-container">
+      <input type="checkbox" id="toggle" hidden />
+      <label class="checkbox" for="toggle" aria-label="Abrir menu" title="Menu">
+        <span class="line line1"></span>
+        <span class="line line2"></span>
+        <span class="line line3"></span>
+      </label>
+      <nav class="overlay-nav">
+        <ul>
+          <li style="--i:0"><a href="#home">Home</a></li>
+          <li style="--i:1"><a href="#sobre">Sobre</a></li>
+          <li style="--i:2"><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <input type="checkbox" id="mostrar-info" hidden />
+    <label class="titulo" for="mostrar-info">
+      <h1>Gustavo Menezes</h1>
+    </label>
+
+    <div class="info-pessoal">
+      <div class="card">
+        <p><i class="fas fa-laptop-code"></i> Estudante de Engenharia Computacional</p>
+        <p><i class="fas fa-desktop"></i> Técnico em Informática</p>
+        <div class="social-media">
+          <a href="https://github.com/https-gustavo" target="_blank" style="text-decoration: none; color: inherit;">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="home">
+      <h2>Olá, seja bem-vindo!</h2>
+      <p>Este projeto para o Bootcamp Fullstack da TQI, onde pratico HTML, CSS, transições e responsividade. Explore para saber mais sobre mim!</p>
+    </section>
+
+    <section id="sobre">
+      <h2>Sobre mim</h2>
+      <p>Desde cedo, a tecnologia sempre fez parte da minha vida. Aos 11 anos, tive meu primeiro 
+        computador e iniciei meus estudos em informática com um curso na Microlins, onde tive meu 
+        primeiro contato com HTML e CSS. Desde então, venho construindo minha trajetória na área. 
+        Hoje, aos 23 anos, atuo como Técnico de Informática na Prefeitura de Andradas e sou estudante 
+        de Engenharia Computacional. Estou em busca da minha primeira oportunidade como desenvolvedor, 
+        motivado a aprender e contribuir com entusiasmo e dedicação!</p>
+    </section>
+
+    <section id="contato">
+      <h2>Contato</h2>
+      <p>Quer trocar uma ideia ou ver mais projetos? Me mande um e-mail em 
+        <a href="mailto:gustavopastredemenezes@gmail.com" style="text-decoration: none; color: inherit;">
+          gustavopastredemenezes@gmail.com
+        </a>.
+      </p>
+          </section>
+  </main>
+
+  <button id="btnTopo" title="Voltar ao topo">↑</button>
+
+  <footer class="footer">
+    <p>&copy; 2025 Gustavo Menezes. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    // ANIMAÇÃO SCROLL
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('section').forEach(sec => observer.observe(sec));
+
+    // BOTÃO TOPO
+    const btnTopo = document.getElementById("btnTopo");
+    window.addEventListener("scroll", () => {
+      btnTopo.classList.toggle("show", window.scrollY > 200);
+    });
+    btnTopo.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // FECHAR MENU NO CLICK 
+    document.querySelectorAll('.overlay-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('toggle').checked = false;
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  font-family: "Bebas Neue", sans-serif;
+  color: #fff;
+  min-height: 100%;
+  background: linear-gradient(135deg, #1e2a47, #5d2c6f);
+  background-size: 400% 400%;
+  animation: bgAnimate 25s ease infinite;
+  position: relative;
+  z-index: 0;
+}
+
+@keyframes bgAnimate {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* CABEÇALHO */
+.header-wrapper {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('giphy.gif');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+/* ENTRADA */
+@keyframes fadeInUp {
+  0%   { opacity: 0; transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gentlePulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.02); }
+}
+
+/* SHAKE */
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25%     { transform: translateX(-4px); }
+  75%     { transform: translateX(4px); }
+}
+
+/* ANIMAÇÃO NOME */
+h1 {
+  font-size: 3rem;
+  letter-spacing: 2px;
+  color: #fff;
+  text-transform: uppercase;
+  opacity: 1;
+  position: relative;
+  animation:
+    fadeInUp 1s ease-out forwards,
+    gentlePulse 2s ease-in-out infinite 1s;
+  transition: color .3s ease, text-shadow .3s ease;
+}
+
+h1:hover {
+  animation:
+    gentlePulse 2s ease-in-out infinite 0s,
+    shake 0.4s ease-in-out both;
+  color: #000000;
+  
+  text-shadow:
+    0 0 16px #6c3283,
+    0 0 16px #5a0d61;
+  cursor: pointer;
+}
+
+/* MENU HAMBÚRGUER */
+.checkbox-container {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+}
+
+.checkbox {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1f1f1f;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #00000066;
+  cursor: pointer;
+  transition: background .3s, transform .3s;
+}
+.checkbox:hover {
+  background: #292929;
+  transform: scale(1.1);
+}
+
+.line {
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  background: #fff;
+  transition: transform .5s ease, opacity .3s ease;
+}
+.line1 { top: 14px; }
+.line2 { top: 23px; }
+.line3 { top: 32px; }
+
+#toggle:checked + .checkbox .line1 {
+  transform: translateY(9px) rotate(45deg);
+}
+#toggle:checked + .checkbox .line2 {
+  opacity: 0;
+}
+#toggle:checked + .checkbox .line3 {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+.overlay-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.95);
+  clip-path: circle(0 at 20px 20px);
+  transition: clip-path .6s ease-out;
+  z-index: 1000;
+  pointer-events: none;
+}
+#toggle:checked ~ .overlay-nav {
+  clip-path: circle(150% at 20px 20px);
+}
+.overlay-nav ul {
+  list-style: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  pointer-events: auto;
+}
+.overlay-nav li {
+  margin: 1rem 0;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .5s ease calc(var(--i)*.1s), transform .5s ease calc(var(--i)*.1s);
+}
+#toggle:checked ~ .overlay-nav li {
+  opacity: 1;
+  transform: translateY(0);
+}
+.overlay-nav a {
+  color: #9b00d7;
+  font-size: 2rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  transition: color .3s, transform .3s;
+  cursor: pointer;
+}
+.overlay-nav a:hover,
+.overlay-nav a:focus {
+  color: #fff;
+  transform: scale(1.1);
+  outline: 2px dashed rgba(155,0,215,0.7);
+}
+
+/* CARTÃO DE INFO PESSOAL */
+.info-pessoal {
+  position: absolute;
+  bottom: 50px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  perspective: 1000px;
+  opacity: 0;
+  transform: rotateY(90deg) translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+#mostrar-info:checked ~ .info-pessoal {
+  opacity: 1;
+  transform: rotateY(0) translateY(0);
+}
+.card {
+  background: rgba(255,255,255,0.07);
+  border: 2px solid #ffffff80;
+  border-radius: 20px;
+  padding: 2rem;
+  width: clamp(300px, 25%, 400px);
+  max-height: 500px;
+  overflow-y: auto;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  backdrop-filter: blur(12px);
+  animation: floatIn 1s ease-out;
+}
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(50px) scale(0.9); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* APLICAÇÃO DO GIF */
+main {
+  position: relative;
+  z-index: 0;
+  padding-top: 2rem;
+}
+main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('giphy.gif');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.05;
+  z-index: -1;
+}
+
+/* SEÇÕES */
+section {
+  padding: 4rem 2rem;
+  margin: 0 auto;
+  max-width: 900px;
+  text-align: center;
+  border-bottom: 1px solid #444;
+  background: rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .8s ease, transform .8s ease, background .3s;
+}
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+section:nth-child(even) {
+  background: rgba(0,0,0,0.35);
+}
+section:hover {
+  background: rgba(155,0,215,0.2);
+  transform: translateY(-5px) scale(1.02);
+}
+section h2 {
+  transition: transform .3s ease, color .3s ease;
+  cursor: default;
+}
+section h2:hover {
+  transform: translateY(-3px);
+  color: #9b00d7;
+}
+
+/* BOTÃO TOPO */
+#btnTopo {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #9b00d7;
+  color: #000000;
+  border: none;
+  padding: .8rem 1rem;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s, visibility .3s, transform .3s;
+  z-index: 999;
+  cursor: pointer;
+}
+#btnTopo.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-10px);
+}
+#btnTopo:focus {
+  outline: 2px dashed rgba(155,0,215,0.7);
+}
+
+/* RODAPÉ */
+.footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #1f1f1f;
+  color: #ccc;
+  font-size: .9rem;
+  letter-spacing: 1px;
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards 0.5s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
